@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Receiver</title>
+</head>
+<body>
+    <h1>Server is Running</h1>
+    <div id="logs"></div>
+    
+    <script>
+    // هذا سيرفر بسيط باستخدام JavaScript
+    const logs = document.getElementById('logs');
+    
+    // محاكاة استقبال البيانات
+    function logMessage(message) {
+        const time = new Date().toLocaleString();
+        logs.innerHTML += `<p>[${time}] ${message}</p>`;
+    }
+    
+    logMessage("السيرفر شغال وجاهز لاستقبال البيانات...");
+    </script>
+</body>
+</html>
